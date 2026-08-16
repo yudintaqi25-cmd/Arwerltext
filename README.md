@@ -60,18 +60,9 @@
 
   <script>
     // GANTI BAGIAN INI dengan teksmu, pakai tanda backtick ( ` ) bukan kutip biasa
-    const teks = `Teman ku semua pada jahat tante
-aku lagi susah mereka ga ada
-coba kalau lagi jaya
-aku di puja puja nya tante
-Sudah terbiasa terjadi tante
-Teman datang kalau lagi butuh saja
-coba kalau lagi susah
-mereka semua menghilang
-Teman ku semua pada jahat tante
-aku lagi susah mereka gak ada
-coba kalau lagi jaya
-aku di puja puja nya tante`;
+    const teks = `Absen dulu ya
+    ada awin,basukin,fadol, dll
+    btw kapan bisa ngoding?`;
 
     const output = document.getElementById('output');
 
