@@ -1,86 +1,185 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Efek Teks Ketik</title>
-<style>
-  body {
-    background: #1a1a2e;
-    color: #f0f0f0;
-    font-family: 'Courier New', monospace;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kapan Ngoding?</title>
 
-  button {
-    background: #e94560;
-    color: white;
-    border: none;
-    padding: 12px 28px;
-    font-size: 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-bottom: 40px;
-  }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  button:hover {
-    background: #d63851;
-  }
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-45deg, #0f172a, #1e1b4b, #0c4a6e, #111827);
+            background-size: 400% 400%;
+            animation: backgroundMove 10s ease infinite;
+        }
 
-  #output {
-    font-size: 22px;
-    max-width: 500px;
-    text-align: center;
-    min-height: 60px;
-    white-space: pre-line;
-  }
+        @keyframes backgroundMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
 
-  #cursor {
-    display: inline-block;
-    width: 2px;
-    background: #f0f0f0;
-    margin-left: 2px;
-    animation: blink 0.8s infinite;
-  }
+        /* Lingkaran dekorasi */
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(2px);
+            opacity: 0.5;
+            animation: float 6s ease-in-out infinite;
+        }
 
-  @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-  }
-</style>
+        .circle1 {
+            width: 200px;
+            height: 200px;
+            background: #38bdf8;
+            top: 10%;
+            left: 10%;
+        }
+
+        .circle2 {
+            width: 250px;
+            height: 250px;
+            background: #a855f7;
+            bottom: 5%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        /* Kotak utama */
+        .card {
+            position: relative;
+            z-index: 2;
+            width: 85%;
+            max-width: 800px;
+            padding: 60px 40px;
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .subtitle {
+            color: #bae6fd;
+            font-size: 18px;
+            margin-bottom: 25px;
+            letter-spacing: 3px;
+        }
+
+        #text {
+            color: white;
+            font-size: clamp(30px, 5vw, 55px);
+            font-weight: bold;
+            text-shadow:
+                0 0 10px #38bdf8,
+                0 0 30px #38bdf8;
+
+            min-height: 80px;
+        }
+
+        /* Cursor mengetik */
+        #text::after {
+            content: "|";
+            animation: blink 0.7s infinite;
+            color: #38bdf8;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .button {
+            margin-top: 35px;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 30px;
+            background: #38bdf8;
+            color: #082f49;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 25px #38bdf8;
+        }
+    </style>
 </head>
+
 <body>
 
-  <button onclick="mulaiKetik()">Tampilkan Teks</button>
-  <div id="output"></div>
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
 
-  <script>
-    // GANTI BAGIAN INI dengan teksmu, pakai tanda backtick ( ` ) bukan kutip biasa
-    const teks = `Absen dulu ya
-    ada awin,basukin,fadol, dll
-    btw kapan bisa ngoding?`;
+    <div class="card">
+        <div class="subtitle">💻 CODING TIME</div>
 
-    const output = document.getElementById('output');
+        <h1 id="text"></h1>
 
-    function mulaiKetik() {
-      output.innerHTML = "";
-      let index = 0;
+        <button class="button" onclick="ulang()">🔄 Ulangi</button>
+    </div>
 
-      function ketikHuruf() {
-        if (index < teks.length) {
-          output.innerHTML = teks.substring(0, index + 1) + '<span id="cursor">|</span>';
-          index++;
-          setTimeout(ketikHuruf, 50);
+    <script>
+        const pesan = "Basuki, Fadol, Awin, kapan bisa ngoding?";
+        let index = 0;
+        let timer;
+
+        function ketik() {
+            const text = document.getElementById("text");
+
+            if (index < pesan.length) {
+                text.innerHTML += pesan.charAt(index);
+                index++;
+
+                timer = setTimeout(ketik, 100);
+            }
         }
-      }
 
-      ketikHuruf();
-    }
-  </script>
+        function ulang() {
+            clearTimeout(timer);
+
+            document.getElementById("text").innerHTML = "";
+            index = 0;
+
+            setTimeout(ketik, 300);
+        }
+
+        // Mulai otomatis
+        ketik();
+    </script>
 
 </body>
 </html>
