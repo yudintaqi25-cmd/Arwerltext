@@ -253,7 +253,7 @@
     <script>
 
         const pesan =
-            "Basuki, Fadol, Awin, kapan bisa ngoding?";
+            "Ija elek kyok ketek";
 
         let index = 0;
         let timer;
