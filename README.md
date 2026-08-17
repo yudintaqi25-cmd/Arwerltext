@@ -253,7 +253,7 @@
     <script>
 
         const pesan =
-            "Ija elek kyok ketek";
+            "Iom suka edi";
 
         let index = 0;
         let timer;
